@@ -1,6 +1,6 @@
-package application;
+package application.user;
 
-import java.util.Scanner;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,22 +8,23 @@ import javax.persistence.Persistence;
 
 import models.Usuario;
 
-public class GetUser {
-	
-	public static Scanner input = new Scanner(System.in);
-	
+public class GetUsers {
+
 	public static void main(String[] args) {
-		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("aula-jpa");
 		EntityManager em = emf.createEntityManager();
 		
-		System.out.print("Digite o id: ");
-		int id = input.nextInt();
+		// jpql
+		List<Usuario> usuarios = em
+				.createQuery("SELECT u from Usuario u", Usuario.class)
+				.setMaxResults(10)
+				.getResultList();
 		
-		Usuario usuario = em.find(Usuario.class, id);
-		System.out.println(usuario);
+		for(Usuario usuario: usuarios) {
+			System.out.println(usuario);
+		}
 		
 		em.close();
 	}
-
+	
 }

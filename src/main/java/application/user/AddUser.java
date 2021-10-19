@@ -1,6 +1,4 @@
-package application;
-
-import java.util.List;
+package application.user;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,23 +6,21 @@ import javax.persistence.Persistence;
 
 import models.Usuario;
 
-public class GetUsers {
-
+public class AddUser {
+	
 	public static void main(String[] args) {
+		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("aula-jpa");
 		EntityManager em = emf.createEntityManager();
 		
-		// jpql
-		List<Usuario> usuarios = em
-				.createQuery("SELECT u from Usuario u", Usuario.class)
-				.setMaxResults(10)
-				.getResultList();
+		Usuario novoUsuario = new Usuario("André", "andre@lanche.con");
 		
-		for(Usuario usuario: usuarios) {
-			System.out.println(usuario);
-		}
+		em.getTransaction().begin();
+		em.persist(novoUsuario);
+		em.getTransaction().commit();
 		
-		em.close();
+		System.out.println(String.format("O ID gerado foi: %s", novoUsuario.getId()));
+		
 	}
-	
+
 }
