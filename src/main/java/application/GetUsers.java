@@ -21,7 +21,7 @@ public class GetUsers {
 				.getResultList();
 		
 		for(Usuario usuario: usuarios) {
-			System.out.println("ID: "+ usuario.getId()+ " E-mail: "+ usuario.getEmail());
+			System.out.println(usuario);
 		}
 		
 		em.close();
